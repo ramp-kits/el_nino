@@ -9,11 +9,15 @@ Predictions = rw.prediction_types.make_regression()
 # The time-series feature extractor step (the first step of the ElNino)
 # workflow takes two additional parameters the parametrize the lookahead
 # check. You may want to change these at the backend or add more check
-# points.
+# points to avoid that people game the setup.
 workflow = rw.workflows.ElNino(check_sizes=[132], check_indexs=[13])
 score_types = [
     rw.score_types.RMSE(name='rmse', precision=3),
 ]
+# We do an 8-fold block cv. With the given parameters, we have
+# length of common block: 300 months = 25 years
+# length of validation block: 288 months = 24 years
+# length of each cv block: 36 months = 3 years
 cv = rw.cvs.TimeSeriesCV(
     n_cv=8, cv_block_size=0.5, period=12, unit='month', unit_2='year')
 get_cv = cv.get_cv
