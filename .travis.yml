@@ -12,6 +12,7 @@ install:
     - conda create -n testenv --yes pip python=$PYTHON_VERSION
     - source activate testenv
     - conda install --yes --quiet numpy scipy matplotlib scikit-learn pandas jupyter seaborn xarray
+    - pip install netcdf4
     - pip install -q flake8
     - git clone https://github.com/paris-saclay-cds/ramp-workflow.git
     - cd ramp-workflow
