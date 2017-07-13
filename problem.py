@@ -31,6 +31,7 @@ def _read_data(path, f_prefix):
     X_train_ds = xr.open_dataset(os.path.join(path, 'data', f_name))
     # making sure that time is not converted to object due to stupid
     # ns bug
+    # note that this only works if time series has less then about 520 years
     X_train_ds['time'] = pd.date_range(
         '1/1/1700', periods=X_train_ds['time'].shape[0], freq='M')\
         - np.timedelta64(15, 'D')
