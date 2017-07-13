@@ -1,6 +1,7 @@
 from __future__ import division, print_function
 import os
 import numpy as np
+import pandas as pd
 import xarray as xr
 import rampwf as rw
 
@@ -28,6 +29,11 @@ get_cv = cv.get_cv
 def _read_data(path, f_prefix):
     f_name = '{}.nc'.format(f_prefix)
     X_train_ds = xr.open_dataset(os.path.join(path, 'data', f_name))
+    # making sure that time is not converted to object due to stupid
+    # ns bug
+    X_train_ds['time'] = pd.date_range(
+        '1/1/1700', periods=X_train_ds['time'].shape[0], freq='M')\
+        - np.timedelta64(15, 'D')
     f_name = '{}.npy'.format(f_prefix)
     y_train_array = np.load(os.path.join(path, 'data', f_name))
     n_burn_in = X_train_ds.attrs['n_burn_in']
