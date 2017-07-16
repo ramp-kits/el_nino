@@ -28,17 +28,17 @@ get_cv = cv.get_cv
 # n_burn_in entries
 def _read_data(path, f_prefix):
     f_name = '{}.nc'.format(f_prefix)
-    X_train_ds = xr.open_dataset(os.path.join(path, 'data', f_name))
+    X_ds = xr.open_dataset(os.path.join(path, 'data', f_name))
     # making sure that time is not converted to object due to stupid
     # ns bug
     # note that this only works if time series has less then about 520 years
-    X_train_ds['time'] = pd.date_range(
-        '1/1/1700', periods=X_train_ds['time'].shape[0], freq='M')\
+    X_ds['time'] = pd.date_range(
+        '1/1/1700', periods=X_ds['time'].shape[0], freq='M')\
         - np.timedelta64(15, 'D')
     f_name = '{}.npy'.format(f_prefix)
-    y_train_array = np.load(os.path.join(path, 'data', f_name))
-    n_burn_in = X_train_ds.attrs['n_burn_in']
-    return X_train_ds, y_train_array[n_burn_in:]
+    y_array = np.load(os.path.join(path, 'data', f_name))
+    n_burn_in = X_ds.attrs['n_burn_in']
+    return X_ds, y_array[n_burn_in:]
 
 
 def get_train_data(path='.'):

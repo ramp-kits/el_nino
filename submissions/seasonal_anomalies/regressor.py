@@ -4,10 +4,10 @@ from sklearn import linear_model
 
 class Regressor(BaseEstimator):
     def __init__(self):
-        self.clf = linear_model.BayesianRidge()
+        self.reg = linear_model.BayesianRidge()
 
     def fit(self, X, y):
-        self.clf.fit(X, y)
+        self.reg.fit(X, y)
 
     def predict(self, X):
-        return self.clf.predict(X)
+        return self.reg.predict(X)
