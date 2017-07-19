@@ -19,7 +19,7 @@ score_types = [
 # length of common block: 300 months = 25 years
 # length of validation block: 288 months = 24 years
 # length of each cv block: 36 months = 3 years
-cv = rw.cvs.TimeSeriesCV(
+cv = rw.cvs.TimeSeries(
     n_cv=8, cv_block_size=0.5, period=12, unit='month', unit_2='year')
 get_cv = cv.get_cv
 
