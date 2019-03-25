@@ -1,4 +1,4 @@
-# RAMP starting kit on the drug spectra dataset
+# RAMP starting kit on the El Nino dataset
 
 Authors: Balazs Kegl
 
