@@ -23,8 +23,10 @@ def get_enso_mean(tas):
 
 class FeatureExtractor(object):
 
-    def __init__(self):
-        pass
+    def __init__(self, restart_name, n_burn_in, n_lookahead):
+        self.restart_name = restart_name
+        self.n_burn_in = n_burn_in
+        self.n_lookahead = n_lookahead
 
     def transform(self, X_ds):
         """Compute the El Nino mean at time t - (12 - X_ds.n_lookahead).
@@ -33,11 +35,11 @@ class FeatureExtractor(object):
         """
         # This is the range for which features should be provided. Strip
         # the burn-in from the beginning.
-        valid_range = np.arange(X_ds.n_burn_in, len(X_ds['time']))
+        valid_range = np.arange(self.n_burn_in, len(X_ds['time']))
         enso = get_enso_mean(X_ds['tas'])
         # Roll the input series back so it corresponds to the month to be
         # predicted
-        enso_rolled = np.roll(enso, 12 - X_ds.n_lookahead)
+        enso_rolled = np.roll(enso, 12 - self.n_lookahead)
         # Strip burn in.
         enso_valid = enso_rolled[valid_range]
         # Reshape into a matrix of one column

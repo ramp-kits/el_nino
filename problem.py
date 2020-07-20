@@ -11,7 +11,11 @@ Predictions = rw.prediction_types.make_regression()
 # workflow takes two additional parameters the parametrize the lookahead
 # check. You may want to change these at the backend or add more check
 # points to avoid that people game the setup.
-workflow = rw.workflows.ElNino(check_sizes=[132], check_indexs=[13])
+_n_burn_in = 120
+_n_lookahead = 6
+workflow = rw.workflows.ElNino(
+    check_sizes=[132], check_indexs=[13],
+    n_burn_in=_n_burn_in, n_lookahead=_n_lookahead)
 score_types = [
     rw.score_types.RMSE(name='rmse', precision=3),
 ]
